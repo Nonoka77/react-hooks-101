@@ -1,17 +1,20 @@
 import React, { useReducer } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import reducer from "../reducers";
 import EventForm from "./EventForm";
 import Events from "./Events";
+import AppContext from "../contexts/AppContext";
+import reducer from "../reducers";
 
 const App = () => {
 	const [state, dispatch] = useReducer(reducer, []); //ここで作られたstateを他のコンポーネントでも共有して利用する
 	return (
-		<div className="container-fluid">
-			<EventForm dispatch={dispatch} state={state} />
-			<Events dispatch={dispatch} state={state} />
-		</div>
+		<AppContext.Provider value={{ state, dispatch }}>
+			<div className="container-fluid">
+				<EventForm />
+				<Events />
+			</div>
+		</AppContext.Provider>
 	);
 };
 
